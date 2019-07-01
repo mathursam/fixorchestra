@@ -22,3 +22,4 @@ All FIX standards specifications: [FIX Standards](https://www.fixtrading.org/sta
 
 Public Orchestra files for service offerings, including past versions of FIX: [Orchestrations](https://github.com/FIXTradingCommunity/orchestrations)
 
+**© Copyright 2019 FIX Protocol Ltd.**
