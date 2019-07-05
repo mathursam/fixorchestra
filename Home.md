@@ -2,7 +2,11 @@
 
 FIX Orchestra is intended to provide a standard and some reference implementation for *machine readable rules of engagement* between counterparties. The goal is to reduce the time to get counterparties trading, and improve accuracy of implementations.
 
-## Getting Started
+## Orchestra Under the Hood (Concepts)
+
+Part1: Message Structures
+
+## Getting Started (Hands-on)
 
 See [Quick-start Tutoral](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Quick-Start-Tutorial) for a hands-on tutorial to learn how to access an Orchestra file.
 
