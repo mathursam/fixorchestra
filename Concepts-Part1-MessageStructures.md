@@ -1,6 +1,6 @@
-# What is in an Orchestra File?
+# Concepts Part 1: Message Structures
 
-## Part 1: Message Structures
+**An Orchestra file contains message definitions and their building blocks.**
 
 ## Overview
 
