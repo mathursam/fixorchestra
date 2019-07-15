@@ -7,15 +7,24 @@ Orchestra under the hood
 
 [Part 1: Message Structures](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part1-MessageStructures) learn about messages and their building blocks
 
-Part 2: Workflow
+[Part 2: Workflow and Scenarios](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part2-Workflow-and-Scenarios) the key to Orchestra's power
 
+<!--
 Part 3: Conditional Expressions *to come*
+
+Part 4: Actors and External State *to come*
+
+Part 5: Service Offerings and Session Configurations *to come*
+-->
 
 ## Hands-on
 
 Quick-start tutorials for software developers
 
 [Part 1: Accessing Message Structures](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Hands-on-Part1-Accessing-Message-Structures) a hands-on tutorial to learn how to access an Orchestra file programmatically.
+
+## Use Cases
+*to come*
 
 ## Frequently Asked Questions
 

@@ -8,6 +8,15 @@
 
 Orchestra is *not* a communication protocol in the ususal sense, nor is it an intermediary for messages on the wire. Rather, it describes message structures and behaviors of interacting peers about their communications rules--technically, metadata rather than data. The benefits of receiving such metadata include the ability to accurately prepare for behaviors in advance rather than discovering them at runtime, potentially leading to unexpected errors or breakdowns. 
 
+### What's it good for?
+
+Receiving machine-readable definitions of message structures can be used for ...
+
+* Developing message encoders and decoders and configuring them in a FIX engine or other communications gateway
+* Specifying and developing message validators and translators
+* Writing messaging test cases
+* Generating documentation for humans
+
 ### At the Application Layer
  
 Orchestra defines messages and behaviors as viewed by the application layer, not bits and bytes as viewed from lower technical protocol layers. Another way to say it is that Orchestra deals with *semantics*. 
