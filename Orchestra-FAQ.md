@@ -20,4 +20,12 @@ A. Insert the following snippet into a message to encode the rule. The `<when>` 
 </fixr:fieldRef>
 ```
 
+## To Submit a Question
+
+Post an issue to GitHub
+
+[Questions about the Orchestra Standard](https://github.com/FIXTradingCommunity/fix-orchestra-spec/issues)
+
+[Questions about Technical Resources](https://github.com/FIXTradingCommunity/fix-orchestra/issues)
+
 **© Copyright 2019 FIX Protocol Ltd.**

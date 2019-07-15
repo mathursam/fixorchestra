@@ -1,4 +1,6 @@
-# How to Access an Orchestra File
+*Orchestra Hands-on Tutorial Part 1:*
+
+# Accessing Message Structures
 
 **An Orchestra file contains message definitions and workflows. When you receive an Orchestra file from a trading counterparty, how do you access it programmatically to discover its elements?**
 

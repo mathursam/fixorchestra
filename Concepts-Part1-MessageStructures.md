@@ -1,4 +1,6 @@
-# Concepts Part 1: Message Structures
+*Orchestra Concepts Part 1:*
+
+# Message Structures
 
 **An Orchestra file contains message definitions and their building blocks.**
 
