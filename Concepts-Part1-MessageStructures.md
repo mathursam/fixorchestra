@@ -2,11 +2,11 @@
 
 # Message Structures
 
-**An Orchestra file contains message definitions and their building blocks.**
+**An Orchestra file contains message definitions and their building blocks, one of the aspects of rules of engagement between counterparties.**
 
 ## Overview
 
-Orchestra is *not* a communication protocol in the ususal sense, nor is it an intermediary for messages on the wire. Rather, it describes message structures and behaviors of interacting peers about their communications rules--technically, metadata rather than data. The benefits of receiving such metadata include the ability to accurately prepare for behaviors in advance rather than discovering them at runtime, potentially leading to unexpected errors or breakdowns. 
+Orchestra is *not* a communication protocol in the ususal sense, nor is it an intermediary for messages on the wire. Rather, it describes message structures and behaviors of interacting peers about their communications rules— technically, metadata rather than data. We call these expected behaviors between counterparties *rules of engagement*. The benefits of receiving such metadata include the ability to accurately prepare for behaviors in advance rather than discovering them at runtime, potentially leading to unexpected errors or breakdowns. 
 
 ### What's it good for?
 
@@ -21,7 +21,7 @@ Receiving machine-readable definitions of message structures can be used for ...
  
 Orchestra defines messages and behaviors as viewed by the application layer, not bits and bytes as viewed from lower technical protocol layers. Another way to say it is that Orchestra deals with *semantics*. 
 
-Orchestra was designed to work for practically any interactive message protocol, not just for FIX. Even within the family of FIX protcols, there are multiple message encodings--including the traditional tag value format, FIXML, and binary encodings such as SBE--but they can all have the same business semantics.
+Orchestra was designed to work for practically any interactive message protocol, not just for FIX. Even within the family of FIX protcols, there are multiple message encodings— including the traditional TagValue format, FIXML, and binary encodings such as SBE— but they can all have the same business semantics.
 
 ### A Standard File Format
 
@@ -37,7 +37,7 @@ Orchestra is not a communications protocol, so it does not deal with instances o
 
 A field is the smallest unit of business semantics. A field always has the same meaning wherever it used. For example, the Price field is used in many message types, but it always means "price per unit of quantity".
 
-A field has an identifier called a tag. In FIX, tags are numeric, and FIX experts know common tags by heart, e.g. tag 44 is the identifier of the Price field. Tags are persistent--they remain the same forever for a given field and can never change or be reused. Only new field tags can be added.
+A field has an identifier called a tag. In FIX, tags are numeric, and FIX experts know common tags by heart, e.g. tag 44 is the identifier of the Price field. Tags are persistent— they remain the same forever for a given field and can never change or be reused. Only new field tags can be added.
 
 How the Symbol (55) field is represented in Orchestra (simplified):
 
@@ -54,7 +54,7 @@ How the Symbol (55) field is represented in Orchestra (simplified):
 Key parts of a field definition:
 
 * The `name` attribute gives a humanly understood name. Typically, this name is not sent on the wire by message processors; it's metadata to aid humans.
-* The `id` attribute, commonly known as tag, is a numeric identifier of a field. In tag value encoding, the tag is sent on the wire.
+* The `id` attribute, commonly known as tag, is a numeric identifier of a field. In FIX TagValue encoding, the tag is sent on the wire.
 * The `abbrName` is an abbreviated name, which is used as a shorter tag in FIXML elements since field names can be very long.
 * The `type` attribute tells the name of the datatype of a field (explained below). 
 * The `scenario` attribute gives a particular useage of a field. We'll explain scenarios when we get to message definitions.
@@ -139,7 +139,7 @@ All `<component>` XML elements are contained by their parent element `<component
 
 A repeating group is like a component, but a repeating group can have multiple instances when sent on the wire. For example, the `Parties` group can carry data for multiple parties to a transaction. (Most repeating group names end in "Grp" but this one is an exception.)
 
-When sent on the wire in tag value encoding, the instances of a repeating group are preceeded by a counter to inform a message decoder how many instances to parse. The counter is a field of a special datatype called `NumInGroup`, in essence a cardinal number. The only difference between a repeating group definition and a component is the addition of `<numInGroup>` element to specify the tag of the group counter. Otherwise, it contains the same field, component and nested group reference formats. 
+When sent on the wire in TagValue encoding, the instances of a repeating group are preceeded by a counter to inform a message decoder how many instances to parse. The counter is a field of a special datatype called `NumInGroup`, in essence a cardinal number. The only difference between a repeating group definition and a component is the addition of `<numInGroup>` element to specify the tag of the group counter. Otherwise, it contains the same field, component and nested group reference formats. 
 
 Here's a simplified definition of the Parties group with its NumInGroup tag.
 
@@ -185,7 +185,9 @@ Here's a simplified definition of an ExecutionReport message that is sent when a
 </fixr:message>
 ```
 
-Message structure definitions have many optional attributes. One in the example, `implMaxLength` informs users that ClOrdID (tag 11) is limited to 20 characters.
+Message structure definitions have many optional XML attributes. One in the example, `implMaxLength` informs users that ClOrdID (tag 11) is limited to 20 characters.
+
+In the message definition above, the first element in the structure, `<fixr:componentRef id="1024"` refers to the StandardHeader component, and the last one with `id="1025"` refers to StandardTrailer. These are required by TagValue encoding.
 
 All `<message>` XML elements are contained by their parent element `<messages>` in an Orchestra file.
 
@@ -193,23 +195,23 @@ All `<message>` XML elements are contained by their parent element `<messages>` 
 
 Orchestra provides these possible values of `presence`:
 
-* **required** -- the field or component MUST be present.
-* **optional** -- the field or component MAY be present; it may be conditionally required based on a rule.
-* **forbidden** -- The field or component MUST NOT be present.
-* **ignored** -- the field or component MAY be present but is not validated.
-* **constant** -- the field has a constant value. (In some encodings, contants need not be sent on the wire.)
+* **required** — the field or component MUST be present.
+* **optional** —  the field or component MAY be present; it may be conditionally required based on a rule.
+* **forbidden** —  The field or component MUST NOT be present.
+* **ignored** —  the field or component MAY be present but is not validated.
+* **constant** —  the field has a constant value. (In some encodings, contants need not be sent on the wire.)
 
-In the above example, fieldRef with `id="37"`, the OrderID, field has attribute `presence="required"`. This means that the rules of engagement state that in this message type, OrderID is a required field--it must be included in every instance of the message to be valid.
+In the above example, fieldRef with `id="37"`, the OrderID, field has attribute `presence="required"`. This means that the rules of engagement state that in this message type, OrderID is a required field— it must be included in every instance of the message to be valid.
 
-Frequently in FIX, fields are conditionally required, that is, it is required when some condition about the message is true. For example, StopPx field is required *when* the value of the OrdType field is Stop or StopLimit. Fortunately, Orchestra has syntax to express such rules -- Orchestra's **Score** Domain Specific Lanaguage (DSL). Score can also used to express assignment of field values. In the example, the ClOrdId field (tag 11) in the ExecutionReport is assigned the value from the incoming order message. We'll leave the syntax of that language for an advanced tutorial, but you should get the gist of the example.
+Frequently in FIX, fields are conditionally required, that is, it is required when some condition about the message is true. For example, StopPx field is required *when* the value of the OrdType field is Stop or StopLimit. Fortunately, Orchestra has syntax to express such rules —  Orchestra's **Score** Domain Specific Lanaguage (DSL). Score can also used to express assignment of field values. In the example, the ClOrdId field (tag 11) in the ExecutionReport is assigned the value from the incoming order message. We'll leave the syntax of that language for an advanced tutorial, but you should get the gist of the example.
 
 ### Scenarios
 
 In FIX, message types are often overloaded for many different meanings. We call each specialization or use case of a message a *scenario*. For example, there may be scenarios of ExecutionReport message type for when an order is booked, when it trades, when it is rejected, or when an order is replaced.
 
-Another reason to use scenarios is that different security types need different sets of fields to describe them. So an option order requires slightly different fields, like MaturityMonthYear (tag 200), that is not required for an equity order. The interesting thing here is that MaturityMonthYear is not directly included in the definition of NewOrderSingle (msgtype="D"), but rather is included in the Instrument component.
+Another reason to use scenarios is that different security types need different sets of fields to describe them. So an option order requires slightly different fields, like MaturityMonthYear (tag 200), that is not required for an equity order. An interesting thing here is that MaturityMonthYear is not directly included in the definition of NewOrderSingle (msgtype="D"), but rather is included in the Instrument component.
 
-To deal with different views of the Instrument block, we could define scenarios for it, one for equities, one for options, and so forth. Each is distinguished by its `scenario` name. An equity only requires a Symbol or SecurityID, but an option also need MaturityMonthYear, StrikePrice, and put or call classification.
+To deal with different views of the Instrument block, we could define scenarios for it, one for equities, one for options, and so forth. Each is distinguished by its `scenario` name. An equity order only requires a Symbol or SecurityID, but an option also need MaturityMonthYear, StrikePrice, and put or call classification.
 
 ```xml
 <fixr:component id="1003" name="Instrument" abbrName="Instrmt" scenario="equity">
@@ -232,7 +234,9 @@ Another common reason to use scenarios is to have different views of code sets. 
 
 ## Next
 
-In subsequent tutorials, we explain concepts of workflow, conditional expressions, and other details of Orchestra.
+In subsequent tutorials, we explain concepts of workflow, conditional expressions, and other details of Orchestra. The next concept tutorial is [Orchestra Concepts Part 2: Workflow and Scenarios](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part2-Workflow-and-Scenarios).
+
+To learn how to access message structures programmatically, see [Orchestra Hands-on Tutorial Part 1: Accessing Message Structures](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Hands-on-Part1-Accessing-Message-Structures).
 
 
 
