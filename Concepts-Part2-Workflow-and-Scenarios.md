@@ -96,7 +96,7 @@ Not shown here, a response can also tell how the key identifiers of a response m
 
 ## Next
 
-How to encode conditional expressions using the Score DSL
+How to encode conditional expressions using the Score DSL [Orchestra Concepts Part 3: Condtional Expressions](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part3-Conditional-Expressions)
 
 ### Back
-[Orchestra Concepts Part 1: Message Structures](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Hands-on-Part1-Accessing-Message-Structures)
+[Orchestra Concepts Part 1: Message Structures](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part1-MessageStructures)

@@ -53,6 +53,7 @@ How the Symbol (55) field is represented in Orchestra (simplified):
 
 Key parts of a field definition:
 
+* The prefix "fixr:" in front of all elements refers to the Orchestra XML namespace. We'll say no more about underlying XML technology, but it will appear in all tutorials.
 * The `name` attribute gives a humanly understood name. Typically, this name is not sent on the wire by message processors; it's metadata to aid humans.
 * The `id` attribute, commonly known as tag, is a numeric identifier of a field. In FIX TagValue encoding, the tag is sent on the wire.
 * The `abbrName` is an abbreviated name, which is used as a shorter tag in FIXML elements since field names can be very long.
