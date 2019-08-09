@@ -9,11 +9,11 @@ Orchestra under the hood
 
 [Part 2: Workflow and Scenarios](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part2-Workflow-and-Scenarios) the key to Orchestra's power
 
+[Part 3: Conditional Expressions](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part3-Conditional-Expressions) Orchestra supports conditionally required fields and workflow with a machine readable language
+
+[Part 4: Actors and External States](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part4-Actors-And-External-States) participants in a service in their state information
+
 <!--
-Part 3: Conditional Expressions *to come*
-
-Part 4: Actors and External State *to come*
-
 Part 5: Service Offerings and Session Configurations *to come*
 -->
 

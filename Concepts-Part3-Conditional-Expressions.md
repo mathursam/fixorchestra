@@ -24,7 +24,7 @@ Receiving machine-readable expressions can be used for ...
 
 Score is the part of Orchestra to form expressions. It is what is called a Domain Specific Language (DSL). It was designed to be easy to learn for software developers since it is highly similar to the expression syntax of common programming languages including C, C++, C#, and Java. It should also look familiar to anyone who has written spreadsheet formulas. It was expected that there would be these two groups of users, so the syntax allows some alternatives. For example, an advanced business user can use the word "or" to combine logical expressions while a software engineer uses the symbol "||" to mean the same thing but using a form common in technical expression syntaxes. The two symbols are interchangeable in Score. 
 
-The complete syntax of Score is defined in the Orchestra specification. However, this tutorial should give enough of the gist to get you started.
+The complete syntax of Score is defined in the Orchestra specification. However, this tutorial won't cover every feature of Score, but it should give enough of the gist to get you started.
 
 ### Conditionally required field
 
@@ -51,19 +51,41 @@ It is a reference to the stop price field definition, matching on its `id` attri
 
 Before we break down the expression in the `<when>` element, see if you can guess its meaning without looking at `<documentation>` that pretty much gives it away.
 
-(waiting...)
-
 I hope that if you understand FIX, that meaning was apparent, but let's analyze it carefully.
 
 The field is by default optional in this message. That is, the field may be present in the message but is not required. However, the contained `<rule>` named "StopOrderRequiresStopPx" overrides the default presence by setting `presence="required"`. 
 
 When is the rule activated? It depends on the `<when>` element. The content of that element is a Score DSL expression. When the expression evalutes to true, then the rule applies, and consquently, stop price is required in the message.
 
-Let's examine the expression. Remember, that the symbol "||" is a synonym for the word "or". So there are two logical expressions connected by "or". If either of the parts is true, the whole expression evaluates to true.
+Let's examine the expression. Remember, that the symbol "||" is a synonym for the word "or". So there are two expressions connected by "or". If either of the parts is true, the whole expression evaluates to true.
 
-There is another non-word symbol in the expression "==", meaning equality. If the two entities on either side of an equality symbol evaluate to the same value, then the expression is true. (If you are not a programmer, I have to explain why it is a double equal sign. The reason is that equal sign actually has two meanings. One is a test of equality as used here. The other meaning is assignment, as when you assign a value to a variable in algebra. Since Score supports both tests of equality and assignment, it has to distinguish the two meanings. Therefore, like many programming languages, it uses a single equal sign for assignment and a double equal for equality.)
+Score also recognizes a logical "and" that connects two logical expressions; both parts must be true for the whole expression to be true. A synonym for "and" is the symbol "&&".
 
-What is "OrdType" in the expression? It is the value of the OrdType field in the same message. The field has tag 40, but you don't have to remeber that to write the expression because the Score implementation can cross-reference the name to its field definition. 
+There is another non-word symbol in the expression "==", meaning equality. If the two entities on either side of an equality symbol evaluate to the same value, then the expression is true. 
+
+(If you are not a programmer, I have to explain why it is a double equal sign. The reason is that equal sign actually has two meanings. One is a test of equality as used here. The other meaning is assignment, as when you assign a value to a variable in algebra. Since Score supports both tests of equality and assignment, it has to distinguish the two meanings. Therefore, like many programming languages, it uses a single equal sign for assignment and a double equal for equality.)
+
+Like the logical operators, equality has both a mathmatical style symbol "==" and word style "eq". You can use the style that is more comfortable for you. In addition to equality, there are symbols for inequality.
+
+| Token     | Name       |
+| --------- | ---------- |
+| \== or eq | equals     |
+| \!= or ne | not equals |
+
+The equality symbol is a comparions operator. It is just one kind of comparison. The other so-called relational operators are:
+
+| Token     | Name                  |
+| --------- | --------------------- |
+| \< or lt  | less than             |
+| \<= or le | less than or equal    |
+| \> or gt  | greater than          |
+| \>= or ge | greater than or equal |
+
+For example, you can test `in.OrdQty > 0`, meaning that the expression is true if OrdQty in the incoming message is greater than zero.
+
+Whenever you compare values, the two values being compared must be of compatible datatypes. For example, you can compare two prices but it doesn't make sense to compare a price to a security identifier.
+
+What is "OrdType" in the expression? It is the value of the OrdType field in the same message. The field has tag 40, but you don't have to remember that to write the expression because the Score implementation can cross-reference the tag to its field definition. 
 
 ```xml
 <fixr:field id="40" name="OrdType" abbrName="OrdTyp" type="OrdTypeCodeSet"  scenario="base"/>
@@ -84,7 +106,7 @@ There is one more non-word symbol in the expression: "^". To explain it, let's s
 
 As you can see, "Stop" and "StopLimit" are names of codes in the OrdTypeCodeSet. Again, you don't need to know the code values on the wire to write the Score expression, only the names of the codes. So, Score expressions are humanly understandable as well as machine readable.
 
-Let's now put together everything we've learned about a Score expression for a conditionally required field and see if your guess was right. The Score expression can be translated to natural language as: "if the value of the OrdType field in this message is equal to the code Stop or is equal to the code StopLimit", then the rule states that the stop price field is required. Not only is the Score expression shorter than the English equivalent, it is unambiguous and can be parsed and evaluated by computer code. The cost to an author is learning a few special symbols, but you already know some of the inportant ones.
+Let's now put together everything we've learned about a Score expression for a conditionally required field and see if your guess was right. The Score expression can be translated to natural language as: "if the value of the OrdType field in this message is equal to the code Stop or is equal to the code StopLimit", then the rule states that the stop price field is required. Not only is the Score expression shorter than the English equivalent, it is unambiguous and can be parsed and evaluated by computer code. The cost to an author is learning a few special symbols, but you already know most of the important ones.
 
 ### Conditional message responses
 
@@ -109,6 +131,22 @@ Field 11 is ClOrdId. The `<assign>` element contains a Score expression to assig
 Answer: datatype String. It is contrained in the definition of the response message by the attribute `implMaxLength="20"`. In short, the outgoing ClOrdID field must be a String of no more than 20 characters.
 
 The prefix "in." of the assignment expression refers to the incoming message that triggered the response. To put it all together, the Score expression assigns the incoming ClOrdID value to the outgoing ClOrdID field. In other words, it echoes to the input to the output, up to 20 characters.
+
+You can assign numeric values using arithmetic operations. For example, amount can be assigned quantity times price.
+
+Supported arithmetic operators are:
+
+| Token    | Name           |
+| -------- | -------------- |
+| \*       | multiplication |
+| /        | division       |
+| % or mod | modulo         |
+| \+       | addition       |
+| \-       | subtraction    |
+
+Formulas work as you'd expect in a spreadsheet. Parenthesis can be used for grouping.
+
+You can test for existence of a field using the `exists` keyword. For example `exists in.StopPx` evaluates to true or false depending on whether the StopPx field is found in an incoming message.
 
 ## Next
 
