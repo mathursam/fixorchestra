@@ -13,9 +13,7 @@ Orchestra under the hood
 
 [Part 4: Actors and External States](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part4-Actors-And-External-States) participants in a service in their state information
 
-<!--
-Part 5: Service Offerings and Session Configurations *to come*
--->
+[Part 5: Service Offerings and Session Configurations](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part5-Service-Offerings-And-Session-Configurations) standardized configuration for connectivity
 
 ## Hands-on
 

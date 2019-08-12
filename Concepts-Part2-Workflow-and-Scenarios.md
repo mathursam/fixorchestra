@@ -31,12 +31,12 @@ Here's an example with three flows between actors. As you can see, flows can hav
 ```xml
 <fixr:actors>
 	<fixr:actor name="BuySide"/>
-	<fixr:actor name="SellSide"/>
-	<fixr:flow name="OrderEntry" source="BuySide" destination="SellSide"
+	<fixr:actor name="Market"/>
+	<fixr:flow name="OrderEntry" source="BuySide" destination="Market"
 messageCast="unicast" reliability="idempotent"/>
-	<fixr:flow name="Executions" source="SellSide" destination="BuySide"
+	<fixr:flow name="Executions" source="Market" destination="BuySide"
 messageCast="unicast" reliability="recoverable"/>
-	<fixr:flow name="MarketData" source="SellSide" destination="BuySide"
+	<fixr:flow name="MarketData" source="Market" destination="BuySide"
 messageCast="multicast" reliability="bestEffort"/>
 </fixr:actors> 
 ```  
@@ -45,7 +45,7 @@ messageCast="multicast" reliability="bestEffort"/>
 
 Each message defined in an Orchestra file belongs to a flow. From its `flow` attribute, you can infer the source and destination of the message from the `<flow>` object of the same name.
 
-Here's an example of an order message on an "OrderEntry" flow, which is sent from BuySide to SellSide.
+Here's an example of an order message on an "OrderEntry" flow, which is sent from BuySide to Market.
 
 ```xml
 <fixr:message msgType="D" flow="OrderEntry" id="14" name="NewOrderSingle" abbrName="Order">
@@ -94,7 +94,11 @@ Here are some important elements and attributes to notice:
 * Responses can have other attributes such as a minimum or maximum number of times it can occur. For example, `implMinOccurs="0" implMaxOccurs="1"` on the acknowledgement response says that it can occur at most once for a given order but may never occur. By default, there is no limit to the number of times a response can trigger.
 * Also, responses can be specified as synchronous or asynchronous. The fill response is specified as `sync="asynchronous"` since the timing of a trade is not determined by the time that the order was entered into the market. It could occur seconds, minutes or hours later (if ever).
 
-Not shown here, a response can also tell how the key identifiers of a response message relate to the original message. For example, an ExecutionReport generally carries the ClOrdId of the original order message.
+Here's how the workflow looks as a UML sequence diagram:
+
+![Sequence Diagram](./media/NewOrderSingle-base.png)
+
+Not shown in the example, a response can also tell how the key identifiers of a response message relate to the original message. For example, an ExecutionReport generally carries the ClOrdId of the original order message.
 
 ## Message Scenarios
 

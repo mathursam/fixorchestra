@@ -69,7 +69,7 @@ In this example, there is an initial state called Closed. The other states are H
 
 Here's what the state machine looks like in standard UML format:
 
-![](./media/MarketPhase.png)
+![State Machine](./media/MarketPhase.png)
 
 Other features can be added to a state machine that are not illustrated here for simplicity.
 
