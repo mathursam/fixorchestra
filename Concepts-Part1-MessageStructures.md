@@ -163,7 +163,7 @@ First, `<message>` has an extra identifier, namely attribute `msgType`, the trad
 
 Another difference between the format of a message and component is that the structure of a message resides under a `<structure>` element. The reason for it is that A message can also have workflow aside from structure. That's what the `flow` attribute is about, too. We'll cover workflow in a later tutorial.
 
-Here's a simplified definition of an ExecutionReport message that is sent when a trade occurs: 
+Here's a simplified definition of an ExecutionReport (35=8) message that is sent when a trade occurs: 
 
 ```xml
 <fixr:message msgType="8" flow="Executions" id="9" name="ExecutionReport" abbrName="ExecRpt" scenario="traded">
@@ -208,7 +208,7 @@ Frequently in FIX, fields are conditionally required, that is, it is required wh
 
 ### Scenarios
 
-In FIX, message types are often overloaded for many different meanings. We call each specialization or use case of a message a *scenario*. For example, there may be scenarios of ExecutionReport message type for when an order is booked, when it trades, when it is rejected, or when an order is replaced.
+In FIX, message types are often overloaded for many different meanings. We call each specialization or use case of a message a *scenario*. For example, there may be scenarios of ExecutionReport (35=8) message type for when an order is booked, when it trades, when it is rejected, or when an order is replaced.
 
 Another reason to use scenarios is that different security types need different sets of fields to describe them. So an option order requires slightly different fields, like MaturityMonthYear (tag 200), that is not required for an equity order. An interesting thing here is that MaturityMonthYear is not directly included in the definition of NewOrderSingle (msgtype="D"), but rather is included in the Instrument component.
 
@@ -239,5 +239,4 @@ In subsequent tutorials, we explain concepts of workflow, conditional expression
 
 To learn how to access message structures programmatically, see [Orchestra Hands-on Tutorial Part 1: Accessing Message Structures](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Hands-on-Part1-Accessing-Message-Structures).
 
-
-
+**© Copyright 2019 FIX Protocol Ltd.**

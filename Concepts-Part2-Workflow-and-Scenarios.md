@@ -10,7 +10,7 @@ A session in FIX or other financial industry protocol involves an exchange of ap
 
 Some messages are part of a synchronous request/response pattern while others are asynchronous or unsolicited. Overall, we call these application behavioral patterns *workflow*. The Orchestra XML schema provides the means to express what kinds of responses are possible to a message, and when each possibility applies.
 
-In FIX, message types are overloaded for meaning. An ExecutionReport is sent when when an order is booked, when it executes immediately— either partially or fully, when it is rejected, and so forth. The message layouts of ExecutionReport events are slightly different for each use case. For instance, an execution conveys a trade quantity and price, while a rejection conveys a reject reason instead. Each use case of a message type is known in Orchestra as a *scenario*. Unlike legacy data dictionaries, Orchestra provides a way to specify each scenario individually rather than as a conglomeration of all its use cases.
+In FIX, message types are overloaded for meaning. An ExecutionReport (35=8) is sent when when an order is booked, when it executes immediately— either partially or fully, when it is rejected, and so forth. The message layouts of ExecutionReport events are slightly different for each use case. For instance, an execution conveys a trade quantity and price, while a rejection conveys a reject reason instead. Each use case of a message type is known in Orchestra as a *scenario*. Unlike legacy data dictionaries, Orchestra provides a way to specify each scenario individually rather than as a conglomeration of all its use cases.
 
 ### What's it good for?
 
@@ -89,7 +89,7 @@ Here's a simplified view of the possible message responses to a NewOrderSingle m
 Here are some important elements and attributes to notice:
 
 * Each of the `<messageRef>` elements contains the identifiers of a message that must be defined elsewhere in the Orchestra file. That is, the `id` of the messageRef must match the `id` of a corresponding `<message>` element. That's where you would find the `<structure>` of the response message.
-* Every message and messageRef has a `scenario` attribute. If not provided, its value is "base" by default. To restate the point above more precisely, a messageRef matches a message definition by combination of its `id` and `scenario` attributes. That combination defines a specific use case of a message type. The structure of ExecutionReport message of scenario `rejected` is different than scenario `traded`, and so forth. Not all the responses need be the same message type, as shown by the response of BusinessMessageReject.
+* Every message and messageRef has a `scenario` attribute. If not provided, its value is "base" by default. To restate the point above more precisely, a messageRef matches a message definition by combination of its `id` and `scenario` attributes. That combination defines a specific use case of a message type. The structure of ExecutionReport (35=8) message of scenario `rejected` is different than scenario `traded`, and so forth. Not all the responses need be the same message type, as shown by the response of BusinessMessageReject.
 * Each of the responses shown here also contains a `<when>` element. That element contains a Score DSL expression that must evaluate to true or false (called a predicate in formal logic). If it evaluates to true, then its response is triggered. If there is no `<when>` element in a response, then it is triggered unconditionally.
 * Responses can have other attributes such as a minimum or maximum number of times it can occur. For example, `implMinOccurs="0" implMaxOccurs="1"` on the acknowledgement response says that it can occur at most once for a given order but may never occur. By default, there is no limit to the number of times a response can trigger.
 * Also, responses can be specified as synchronous or asynchronous. The fill response is specified as `sync="asynchronous"` since the timing of a trade is not determined by the time that the order was entered into the market. It could occur seconds, minutes or hours later (if ever).
@@ -98,7 +98,7 @@ Here's how the workflow looks as a UML sequence diagram:
 
 ![Sequence Diagram](./media/NewOrderSingle-base.png)
 
-Not shown in the example, a response can also tell how the key identifiers of a response message relate to the original message. For example, an ExecutionReport generally carries the ClOrdId of the original order message.
+Not shown in the example, a response can also tell how the key identifiers of a response message relate to the original message. For example, an ExecutionReport (35=8) generally carries the ClOrdId (11) field of the original order message.
 
 ## Message Scenarios
 
@@ -113,7 +113,7 @@ Let's compare to of the responses in the example above but with some details str
 </fixr:response>
 ```
 
-The two responses both refer to a response message `<messageRef>` and both of them are ExecutionReport messages. The events are not the same though, and although both responses have `msgType="8"`, the messasge layouts are not the same. Both ExecutionReport messages have the usual identifiers, only a trade produces a price and quantity while an order acknowledgement does not. Likewise, and ExecutionReport for order expiration or rejection would contain different fields. Unlike legacy FIX data dictionaries, Orchestra can provide a precise message layout for each event.
+The two responses both refer to a response message `<messageRef>` and both of them are ExecutionReport (35=8) messages. The events are not the same though, and although both responses have `msgType="8"`, the messasge layouts are not the same. Both ExecutionReport messages have the usual identifiers, only a trade produces a price and quantity while an order acknowledgement does not. Likewise, and ExecutionReport for order expiration or rejection would contain different fields. Unlike legacy FIX data dictionaries, Orchestra can provide a precise message layout for each event.
 
 Here's a simplified view of the "traded" scenario message definition:
 
@@ -153,3 +153,5 @@ How to encode conditional expressions using the Score DSL [Orchestra Concepts Pa
 
 ### Back
 [Orchestra Concepts Part 1: Message Structures](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part1-MessageStructures)
+
+**© Copyright 2019 FIX Protocol Ltd.**

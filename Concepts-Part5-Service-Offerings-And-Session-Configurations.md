@@ -61,3 +61,9 @@ Here's a sample interface definition with two orchestrations. It all works over 
 A `<session>` element can contain configuration for any protocols in the stack that is specific to the session. In this case, the transport is always TCP for the service offering, but each session contains transport settings that are unique to that session. In this example, a primary and secondary port are offered for fail-over.
 
 Optionally, security keys may be provided for a session in a `<securityKeys>` element. It must follow the textual encoding format described in IETF RFC 7468. Optional parts include certificates and private keys.
+
+
+### Back
+[Orchestra Concepts Part 4: Actors and External States](../Concepts-Part4-Actors-And-External-States)
+
+**© Copyright 2019 FIX Protocol Ltd.**

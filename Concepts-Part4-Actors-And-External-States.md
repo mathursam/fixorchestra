@@ -10,7 +10,7 @@ The participants in a service play different roles. In FIX, the terms Party and 
 
 In Orchestra, we abstract the role of a party that sends or recieves messages as an *actor*. As explained in [Part 2: Workflow and Scenarios](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part2-Workflow-and-Scenarios), actors send and receive messages on flows and the exchange of messages can be defined in Orchestra using workflow features. Specifically, a message may trigger one of several possible responses, and each response can have a conditional expression that tells when that response is fired. 
 
-Responses do not depend solely the contents of messages. The response to an order also depends whether the market is open, on other orders resting in a book, and possibly whether a limit price exceeds some daily bracket. The TradeDate field in an ExecutionReport also depends on state information of the market (not always the same as calendar date). Orchestra supports external states in two ways: state variables of actors and state machines.
+Responses do not depend solely the contents of messages. The response to an order also depends whether the market is open, on other orders resting in a book, and possibly whether a limit price exceeds some daily bracket. The TradeDate field in an ExecutionReport (35=8) also depends on state information of the market (not always the same as calendar date). Orchestra supports external states in two ways: state variables of actors and state machines.
 
 ## State Variables
 
@@ -29,7 +29,7 @@ To keep it simple, Orchestra uses the same syntax to define state variables as i
 </fixr:actor>
 ```
 
-In this example, "Market" is the name of an actor that receives orders and sends executions and other messages. Its first state variable is defined as `<fixr:fieldRef id="75`, the same way a field is referenced in a message or component definition. Tag 75 is the TradeDate field of datatype LocalMktDate. In other words, Market has a persistent value of TradeDate. The state variable can be used to assign a value to TradeDate in outgoing messages. They can it can also be used in message validations through a rule with a conditional expression.
+In this example, "Market" is the name of an actor that receives orders and sends executions and other messages. Its first state variable is defined as `<fixr:fieldRef id="75`, the same way a field is referenced in a message or component definition. Tag 75 is the identifier of the TradeDate field;it is of datatype LocalMktDate. In other words, Market has a persistent value of TradeDate. The state variable can be used to assign a value to TradeDate in outgoing messages. They can it can also be used in message validations through a rule with a conditional expression.
 
 The second state variable is a reference to repeating group `<fixr:group category="SecuritiesReferenceData" id="2186" name="SecMassStatGrp" scenario="base">`. Without showing its full definition, understand that each instance of the group tells the current trading status of an instrument. In a live system,this would be held in some kind of database (possibly all cached in memory), but Orchestra provides an abstraction for the data structure with standardized semantics.
 
@@ -79,7 +79,9 @@ Other features can be added to a state machine that are not illustrated here for
 
 ### Next
 
-to come
+[Orchestra Concepts Part 5: Service Offerings and Session Configurations](../Concepts-Part5-Service-Offerings-And-Session-Configurations)
 
 ### Back
 [Orchestra Concepts Part 3: Conditional Expressions](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part3-Conditional-Expressions)
+
+**© Copyright 2019 FIX Protocol Ltd.**

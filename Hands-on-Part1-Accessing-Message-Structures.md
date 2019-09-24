@@ -172,4 +172,4 @@ Message name: NewOrderSingle scenario: SecurityType-Future MsgType: D
 	ComponentRef id: 1025 scenario: base
   ```
 
-#### Copyright 2019 FIX Protocol Ltd.
+**© Copyright 2019 FIX Protocol Ltd.**

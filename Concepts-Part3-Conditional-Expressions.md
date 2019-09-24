@@ -93,7 +93,7 @@ What is "OrdType" in the expression? It is the value of the OrdType field in the
 
 Score lets you reference other fields in the same message, and even reference an incoming message in an expression pertaining to its response. Since "OrdType" is followed by an equality symbol, there is a test to evaluate whether the value of the OrdType field to some other value.
 
-There is one more non-word symbol in the expression: "^". To explain it, let's show another piece of the Orchestra file. Notice that the type of the OrdType field above is "OrdTypeCodeSet". That is not the name of a built-in FIX datatype, but rather is the name of a code set, shown below (simplified).
+There is one more non-word symbol in the expression: "^". To explain it, let's show another piece of the Orchestra file. Notice that the type of the OrdType (40) field above is "OrdTypeCodeSet". That is not the name of a built-in FIX datatype, but rather is the name of a code set, shown below (simplified).
 
 ```xml
 <fixr:codeSet type="char" id="40" name="OrdTypeCodeSet" scenario="base" >
@@ -122,15 +122,15 @@ A Score expression can be used to assign a field value in a response message, as
 </fixr:fieldRef>
 ```
 
-Field 11 is ClOrdId. The `<assign>` element contains a Score expression to assign a value to that field in the response. Unlike the `<when>` elements above, this Score expression is *not* a true/false predicate, but rather evaluates to a value in the datatype of ClOrdId. What is that?
+Tag 11 is the identifier of the ClOrdId field. The `<assign>` element contains a Score expression to assign a value to that field in the response. Unlike the `<when>` elements above, this Score expression is *not* a true/false predicate, but rather evaluates to a value in the datatype of ClOrdId. What is that?
 
 ```xml
 <fixr:field type="String" id="11" name="ClOrdID" abbrName="ClOrdID" scenario="base"/>
 ```
 
-Answer: datatype String. It is contrained in the definition of the response message by the attribute `implMaxLength="20"`. In short, the outgoing ClOrdID field must be a String of no more than 20 characters.
+Answer: datatype String. It is contrained in the definition of the response message by the attribute `implMaxLength="20"`. In short, the outgoing ClOrdID (11) field must be a String of no more than 20 characters.
 
-The prefix "in." of the assignment expression refers to the incoming message that triggered the response. To put it all together, the Score expression assigns the incoming ClOrdID value to the outgoing ClOrdID field. In other words, it echoes to the input to the output, up to 20 characters.
+The prefix "in." of the assignment expression refers to the incoming message that triggered the response. To put it all together, the Score expression assigns the incoming ClOrdID (11) value to the outgoing ClOrdID field. In other words, it echoes to the input to the output, up to 20 characters.
 
 You can assign numeric values using arithmetic operations. For example, amount can be assigned quantity times price.
 
@@ -150,7 +150,9 @@ You can test for existence of a field using the `exists` keyword. For example `e
 
 ## Next
 
-Actors and external states
+[Orchestra Concepts Part 4: Actors and External States](../Concepts-Part4-Actors-And-External-States)
 
 ### Back
 [Orchestra Concepts Part 2: Workflow and Scenarios](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part2-Workflow-and-Scenarios)
+
+**© Copyright 2019 FIX Protocol Ltd.**
