@@ -64,6 +64,6 @@ Optionally, security keys may be provided for a session in a `<securityKeys>` el
 
 
 ### Back
-[Orchestra Concepts Part 4: Actors and External States](../Concepts-Part4-Actors-And-External-States)
+[Orchestra Concepts Part 4: Actors and External States](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part4-Actors-And-External-States)
 
 **© Copyright 2019 FIX Protocol Ltd.**

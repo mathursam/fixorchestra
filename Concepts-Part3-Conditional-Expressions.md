@@ -150,7 +150,7 @@ You can test for existence of a field using the `exists` keyword. For example `e
 
 ## Next
 
-[Orchestra Concepts Part 4: Actors and External States](../Concepts-Part4-Actors-And-External-States)
+[Orchestra Concepts Part 4: Actors and External States](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part4-Actors-And-External-States)
 
 ### Back
 [Orchestra Concepts Part 2: Workflow and Scenarios](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part2-Workflow-and-Scenarios)

@@ -79,7 +79,7 @@ Other features can be added to a state machine that are not illustrated here for
 
 ### Next
 
-[Orchestra Concepts Part 5: Service Offerings and Session Configurations](../Concepts-Part5-Service-Offerings-And-Session-Configurations)
+[Orchestra Concepts Part 5: Service Offerings and Session Configurations](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part5-Service-Offerings-And-Session-Configurations)
 
 ### Back
 [Orchestra Concepts Part 3: Conditional Expressions](https://github.com/FIXTradingCommunity/fix-orchestra/wiki/Concepts-Part3-Conditional-Expressions)
